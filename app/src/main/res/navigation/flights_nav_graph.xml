@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/flights_nav_graph"
+    app:startDestination="@id/searchFlightsFragment">
+
+    <fragment
+        android:id="@+id/searchFlightsFragment"
+        android:name="com.xardev.flightnow.ui.SearchFlightsFragment"
+        android:label="SearchFlightsFragment"
+        tools:layout="@layout/fragment_search_flights">
+        <action
+            android:id="@+id/action_searchFlightsFragment_to_searchStationFragment"
+            app:destination="@id/searchStationFragment" />
+        <action
+            android:id="@+id/action_searchFlightsFragment_to_flightDetailsFragment"
+            app:destination="@id/flightDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchStationFragment"
+        android:name="com.xardev.flightnow.ui.SearchStationFragment"
+        android:label="SearchStationFragment"
+        tools:layout="@layout/fragment_search_station"/>
+    <fragment
+        android:id="@+id/flightDetailsFragment"
+        android:name="com.xardev.flightnow.ui.FlightDetailsFragment"
+        android:label="FlightDetailsFragment"
+        tools:layout="@layout/fragment_flight_details"/>
+</navigation>
