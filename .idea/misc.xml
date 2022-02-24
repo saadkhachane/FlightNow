@@ -3,9 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/saad/AndroidStudioProjects/FlightNow/app/src/main/res/drawable/back_with_radius.xml" value="0.165" />
+        <entry key="..\:/Users/saad/AndroidStudioProjects/FlightNow/app/src/main/res/drawable/ic_expand.xml" value="0.122" />
+        <entry key="..\:/Users/saad/AndroidStudioProjects/FlightNow/app/src/main/res/layout/Flight_item.xml" value="0.33" />
         <entry key="..\:/Users/saad/AndroidStudioProjects/FlightNow/app/src/main/res/layout/activity_main.xml" value="0.1703125" />
-        <entry key="..\:/Users/saad/AndroidStudioProjects/FlightNow/app/src/main/res/layout/fragment_flight_details.xml" value="0.1703125" />
-        <entry key="..\:/Users/saad/AndroidStudioProjects/FlightNow/app/src/main/res/layout/fragment_search_flights.xml" value="0.1703125" />
+        <entry key="..\:/Users/saad/AndroidStudioProjects/FlightNow/app/src/main/res/layout/flight_item.xml" value="0.4078091106290672" />
+        <entry key="..\:/Users/saad/AndroidStudioProjects/FlightNow/app/src/main/res/layout/fragment_flight_details.xml" value="0.22" />
+        <entry key="..\:/Users/saad/AndroidStudioProjects/FlightNow/app/src/main/res/layout/fragment_search_flights.xml" value="0.2" />
+        <entry key="..\:/Users/saad/AndroidStudioProjects/FlightNow/app/src/main/res/layout/fragment_search_station.xml" value="0.25" />
+        <entry key="..\:/Users/saad/AndroidStudioProjects/FlightNow/app/src/main/res/layout/station_item.xml" value="0.33" />
       </map>
     </option>
   </component>

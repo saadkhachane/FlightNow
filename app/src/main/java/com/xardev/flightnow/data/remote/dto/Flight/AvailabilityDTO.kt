@@ -38,7 +38,11 @@ data class AvailabilityDTO(
                                     operatedBy = flight.operatedBy,
                                     amount = if (fares.isNotEmpty()) fares[0].amount.toString() else "",
                                     time = flight.time,
-                                    timeUTC = flight.timeUTC
+                                    timeUTC = flight.timeUTC,
+                                    origin = trip.origin,
+                                    originName = trip.originName,
+                                    destination = trip.destination,
+                                    destinationName = trip.destinationName
                                 )
                             )
 

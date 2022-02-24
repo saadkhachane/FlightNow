@@ -1,16 +1,613 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.SearchFlightsFragment">
+        tools:context=".ui.SearchFlightsFragment"
+        android:backgroundTint="@color/background"
+        android:padding="0dp">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/background"
+            android:padding="0dp"
+            android:outlineProvider="none">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:contentScrim="@android:color/transparent"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                android:outlineProvider="none">
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/background"
+                    android:layout_margin="0dp"
+                    android:padding="0dp">
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginTop="-180dp"
+                        android:layout_marginEnd="-90dp"
+                        app:srcCompat="@drawable/ic_ellipse_head" />
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginEnd="-20dp"
+                        app:srcCompat="@drawable/flight_image" />
+
+
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/materialCardView_shadow"
+                        android:layout_width="0dp"
+                        android:layout_height="55dp"
+                        app:contentPadding="16dp"
+                        app:rippleColor="@color/ripple"
+                        android:alpha="0.2"
+                        app:cardElevation="10dp"
+                        app:cardCornerRadius="8dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/btn_departure"
+                        app:layout_constraintEnd_toEndOf="@+id/btn_departure"
+                        app:layout_constraintStart_toStartOf="@+id/btn_departure"
+                        app:layout_constraintTop_toTopOf="@+id/btn_departure" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/btn_departure"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:layout_marginHorizontal="30dp"
+                        app:cardElevation="15dp"
+                        android:outlineProvider="none"
+                        android:clickable="true"
+                        app:rippleColor="@color/ripple"
+                        app:cardCornerRadius="8dp"
+                        app:contentPadding="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView2">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="22dp"
+                                android:src="@drawable/ic_flight_takeoff" />
+
+                            <TextView
+                                android:id="@+id/txt_departure"
+                                style="@style/text_primary"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="16dp"
+                                android:textSize="18sp"
+                                android:text="Departure" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/materialCardView2_shadow"
+                        android:layout_width="0dp"
+                        android:layout_height="55dp"
+                        app:contentPadding="16dp"
+                        app:rippleColor="@color/ripple"
+                        android:alpha="0.2"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="10dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/btn_destination"
+                        app:layout_constraintEnd_toEndOf="@+id/btn_destination"
+                        app:layout_constraintStart_toStartOf="@+id/btn_destination"
+                        app:layout_constraintTop_toTopOf="@+id/btn_destination" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/btn_destination"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:layout_marginHorizontal="30dp"
+                        android:layout_marginTop="16dp"
+                        app:cardElevation="15dp"
+                        android:outlineProvider="none"
+                        android:clickable="true"
+                        app:rippleColor="@color/ripple"
+                        app:cardCornerRadius="8dp"
+                        app:contentPadding="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/btn_departure">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="22dp"
+                                android:src="@drawable/ic_flight_land" />
+
+                            <TextView
+                                android:id="@+id/txt_destination"
+                                style="@style/text_primary"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="16dp"
+                                android:textSize="18sp"
+                                android:text="Destination" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/btn_swap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="24dp"
+                        android:backgroundTint="@color/purple"
+                        android:clickable="true"
+                        app:fabSize="mini"
+                        app:elevation="20dp"
+                        android:outlineProvider="none"
+                        app:layout_constraintBottom_toBottomOf="@+id/btn_destination"
+                        app:layout_constraintEnd_toEndOf="@+id/btn_destination"
+                        app:layout_constraintTop_toTopOf="@+id/btn_departure"
+                        app:srcCompat="@drawable/ic_swap"
+                        app:useCompatPadding="false" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/materialCardView3_shadow"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:alpha="0.2"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="10dp"
+                        app:contentPadding="16dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/card_passengers"
+                        app:layout_constraintEnd_toEndOf="@+id/card_passengers"
+                        app:layout_constraintStart_toStartOf="@+id/card_passengers"
+                        app:layout_constraintTop_toTopOf="@+id/card_passengers"/>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/card_passengers"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="30dp"
+                        app:cardCornerRadius="8dp"
+                        app:contentPadding="16dp"
+                        android:layout_marginTop="16dp"
+                        app:cardElevation="25dp"
+                        android:outlineProvider="none"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/btn_destination">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:id="@+id/imageView3"
+                                android:layout_width="24dp"
+                                android:layout_height="22dp"
+                                android:src="@drawable/ic_passengers"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <Button
+                                android:id="@+id/btn_expand"
+                                style="@style/iconButton"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:backgroundTint="@color/white"
+                                android:elevation="0dp"
+                                android:paddingHorizontal="8dp"
+                                app:cornerRadius="22dp"
+                                app:icon="@drawable/ic_expand"
+                                app:iconTint="@color/black"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                style="@style/text_primary"
+                                android:id="@+id/txt_passenger"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="16dp"
+                                android:text="Passegers"
+                                android:textSize="18sp"
+                                app:layout_constraintStart_toEndOf="@+id/imageView3" />
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/layout_passengers"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/imageView3"
+                                app:layout_constraintTop_toBottomOf="@+id/txt_passenger">
+
+
+                                <TextView
+                                    android:id="@+id/textView3"
+                                    style="@style/text_secondary"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginStart="16dp"
+                                    android:text="Adult"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <Button
+                                    android:id="@+id/txt_adult"
+                                    style="@style/text_primary"
+                                    android:layout_width="60dp"
+                                    android:layout_height="40dp"
+                                    android:layout_marginStart="-8dp"
+                                    android:backgroundTint="@color/text_field"
+                                    android:clickable="false"
+                                    android:elevation="0dp"
+                                    android:enabled="false"
+                                    android:focusable="false"
+                                    android:insetTop="0dp"
+                                    android:insetBottom="0dp"
+                                    android:outlineProvider="none"
+                                    android:text="1"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/black"
+                                    app:layout_constraintStart_toEndOf="@+id/btn_add_adult"
+                                    app:layout_constraintTop_toTopOf="@+id/btn_add_adult" />
+
+                                <Button
+                                    android:id="@+id/btn_add_adult"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_marginTop="8dp"
+                                    android:backgroundTint="@color/purple"
+                                    android:elevation="2dp"
+                                    android:focusable="false"
+                                    android:insetTop="0dp"
+                                    android:insetBottom="0dp"
+                                    android:padding="0dp"
+                                    android:text="+"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/white"
+                                    android:textSize="20sp"
+                                    app:cornerRadius="10dp"
+                                    app:iconPadding="0dp"
+                                    app:layout_constraintStart_toStartOf="@+id/textView3"
+                                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+                                <Button
+                                    android:id="@+id/btn_remove_adult"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_marginStart="-8dp"
+                                    android:layout_marginTop="8dp"
+                                    android:backgroundTint="@color/purple"
+                                    android:elevation="2dp"
+                                    android:focusable="false"
+                                    android:insetTop="0dp"
+                                    android:insetBottom="0dp"
+                                    android:padding="0dp"
+                                    android:text="-"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/white"
+                                    android:textSize="20sp"
+                                    app:cornerRadius="10dp"
+                                    app:iconPadding="0dp"
+                                    app:layout_constraintStart_toEndOf="@+id/txt_adult"
+                                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+
+                                <TextView
+                                    android:id="@+id/textView4"
+                                    style="@style/text_secondary"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginStart="24dp"
+                                    android:text="Teen"
+                                    app:layout_constraintStart_toEndOf="@+id/btn_remove_adult"
+                                    app:layout_constraintTop_toTopOf="@+id/textView3" />
+
+                                <Button
+                                    android:id="@+id/txt_teen"
+                                    style="@style/text_primary"
+                                    android:layout_width="60dp"
+                                    android:layout_height="40dp"
+                                    android:layout_marginStart="-8dp"
+                                    android:backgroundTint="@color/text_field"
+                                    android:clickable="false"
+                                    android:elevation="0dp"
+                                    android:enabled="false"
+                                    android:focusable="false"
+                                    android:insetTop="0dp"
+                                    android:insetBottom="0dp"
+                                    android:text="0"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/black"
+                                    app:layout_constraintStart_toEndOf="@+id/btn_add_teen"
+                                    app:layout_constraintTop_toTopOf="@+id/btn_add_teen" />
+
+                                <Button
+                                    android:id="@+id/btn_add_teen"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_marginTop="8dp"
+                                    android:backgroundTint="@color/purple"
+                                    android:elevation="2dp"
+                                    android:focusable="false"
+                                    android:insetTop="0dp"
+                                    android:insetBottom="0dp"
+                                    android:padding="0dp"
+                                    android:text="+"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/white"
+                                    android:textSize="20sp"
+                                    app:cornerRadius="10dp"
+                                    app:iconPadding="0dp"
+                                    app:layout_constraintStart_toStartOf="@+id/textView4"
+                                    app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+                                <Button
+                                    android:id="@+id/btn_remove_teen"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_marginStart="-8dp"
+                                    android:layout_marginTop="8dp"
+                                    android:backgroundTint="@color/purple"
+                                    android:elevation="2dp"
+                                    android:focusable="false"
+                                    android:insetTop="0dp"
+                                    android:insetBottom="0dp"
+                                    android:padding="0dp"
+                                    android:text="-"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/white"
+                                    android:textSize="20sp"
+                                    app:cornerRadius="10dp"
+                                    app:iconPadding="0dp"
+                                    app:layout_constraintStart_toEndOf="@+id/txt_teen"
+                                    app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+                                <TextView
+                                    android:id="@+id/textView5"
+                                    style="@style/text_secondary"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="16dp"
+                                    android:text="Child"
+                                    app:layout_constraintStart_toStartOf="@+id/btn_add_adult"
+                                    app:layout_constraintTop_toBottomOf="@+id/txt_adult" />
+
+                                <Button
+                                    android:id="@+id/txt_child"
+                                    style="@style/text_primary"
+                                    android:layout_width="60dp"
+                                    android:layout_height="40dp"
+                                    android:layout_marginStart="-8dp"
+                                    android:backgroundTint="@color/text_field"
+                                    android:clickable="false"
+                                    android:elevation="0dp"
+                                    android:enabled="false"
+                                    android:focusable="false"
+                                    android:insetTop="0dp"
+                                    android:insetBottom="0dp"
+                                    android:text="0"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/black"
+                                    app:layout_constraintStart_toEndOf="@+id/btn_add_child"
+                                    app:layout_constraintTop_toTopOf="@+id/btn_add_child" />
+
+                                <Button
+                                    android:id="@+id/btn_add_child"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_marginTop="8dp"
+                                    android:backgroundTint="@color/purple"
+                                    android:elevation="0dp"
+                                    android:focusable="false"
+                                    android:insetTop="0dp"
+                                    android:insetBottom="0dp"
+                                    android:padding="2dp"
+                                    android:text="+"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/white"
+                                    android:textSize="20sp"
+                                    app:cornerRadius="10dp"
+                                    app:iconPadding="0dp"
+                                    app:layout_constraintStart_toStartOf="@+id/textView5"
+                                    app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+                                <Button
+                                    android:id="@+id/btn_remove_child"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_marginStart="-8dp"
+                                    android:layout_marginTop="8dp"
+                                    android:backgroundTint="@color/purple"
+                                    android:elevation="2dp"
+                                    android:focusable="false"
+                                    android:insetTop="0dp"
+                                    android:insetBottom="0dp"
+                                    android:padding="0dp"
+                                    android:text="-"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/white"
+                                    android:textSize="20sp"
+                                    app:cornerRadius="10dp"
+                                    app:iconPadding="0dp"
+                                    app:layout_constraintStart_toEndOf="@+id/txt_child"
+                                    app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <Button
+                        android:id="@+id/btn_date"
+                        style="@style/text_primary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:text="Pick a date"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        app:cornerRadius="8dp"
+                        android:textSize="18sp"
+                        app:icon="@drawable/ic_callendar"
+                        app:layout_constraintStart_toStartOf="@+id/materialCardView3_shadow"
+                        app:layout_constraintTop_toBottomOf="@+id/materialCardView3_shadow" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chipGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:checkedChip="@id/btnBest"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/btn_date"
+                        app:layout_constraintTop_toBottomOf="@+id/range_slider"
+                        app:singleSelection="true">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/btnBest"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checkable="true"
+                            android:checked="true"
+                            android:text="Best" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/btncheapest"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checkable="true"
+                            android:text="Cheapest" />
+                    </com.google.android.material.chip.ChipGroup>
+
+                    <TextView
+                        android:id="@+id/textView"
+                        style="@style/text_secondary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        android:text="Price range"
+                        app:layout_constraintStart_toStartOf="@+id/btn_date"
+                        app:layout_constraintTop_toBottomOf="@+id/btn_date" />
+
+                    <TextView
+                        android:id="@+id/txt_price_min"
+                        style="@style/text_primary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:padding="8dp"
+                        android:textSize="12sp"
+                        android:background="@drawable/back_with_radius"
+                        android:text="0.0"
+                        android:textAlignment="center"
+                        app:layout_constraintStart_toStartOf="@+id/btn_date"
+                        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+
+                    <TextView
+                        android:id="@+id/txt_price_max"
+                        style="@style/text_primary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/back_with_radius"
+                        android:padding="8dp"
+                        android:text="1000.0"
+                        android:textAlignment="center"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/materialCardView3_shadow"
+                        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+
+                    <com.google.android.material.slider.RangeSlider
+                        android:id="@+id/range_slider"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:valueFrom="0.0"
+                        android:valueTo="1000.0"
+                        android:stepSize="10.0"
+                        app:layout_constraintEnd_toStartOf="@+id/txt_price_max"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@+id/txt_price_min"
+                        app:layout_constraintTop_toBottomOf="@+id/textView"
+                        app:values="@array/initial_slider_values" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:background="@android:color/transparent"
+                    android:outlineProvider="none"
+                    app:layout_collapseMode="none"/>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:background="@color/background"/>
+
+        <TextView
+            android:id="@+id/txt_no_flights"
+            style="@style/text_primary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No flights found."
+            android:layout_marginTop="32dp"
+            android:textAlignment="center"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:textSize="18sp"
+            android:textColor="@android:color/darker_gray"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
