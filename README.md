@@ -1,5 +1,8 @@
 # FlightNow
 
+![Google Pixel 3XL – 4](https://user-images.githubusercontent.com/50977094/155676507-76e32937-005f-4049-a39f-dfa8123c105a.png)
+
+
 <h3>Tech Stack</h3>
 
 <ul dir="auto">
