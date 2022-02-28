@@ -1,4 +1,4 @@
-package com.xardev.flightnow.data.remote.dto.Station
+package com.xardev.flightnow.data.remote.dto.station
 
 import com.xardev.flightnow.models.Station
 

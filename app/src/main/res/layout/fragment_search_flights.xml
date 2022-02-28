@@ -106,7 +106,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="16dp"
                                 android:textSize="18sp"
-                                android:text="Departure" />
+                                android:text="@string/departure" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -159,7 +159,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="16dp"
                                 android:textSize="18sp"
-                                android:text="Destination" />
+                                android:text="@string/destination" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -241,7 +241,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="16dp"
-                                android:text="Passegers"
+                                android:text="@string/passegers"
                                 android:textSize="18sp"
                                 app:layout_constraintStart_toEndOf="@+id/imageView3" />
 
@@ -262,7 +262,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:layout_marginStart="16dp"
-                                    android:text="Adult"
+                                    android:text="@string/adult"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -334,7 +334,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:layout_marginStart="24dp"
-                                    android:text="Teen"
+                                    android:text="@string/teen"
                                     app:layout_constraintStart_toEndOf="@+id/btn_remove_adult"
                                     app:layout_constraintTop_toTopOf="@+id/textView3" />
 
@@ -404,7 +404,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="16dp"
-                                    android:text="Child"
+                                    android:text="@string/child"
                                     app:layout_constraintStart_toStartOf="@+id/btn_add_adult"
                                     app:layout_constraintTop_toBottomOf="@+id/txt_adult" />
 
@@ -484,7 +484,7 @@
                         android:layout_marginTop="16dp"
                         android:insetTop="0dp"
                         android:insetBottom="0dp"
-                        android:text="Pick a date"
+                        android:text="@string/pick_a_date"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         app:cornerRadius="8dp"
@@ -510,14 +510,14 @@
                             android:layout_height="wrap_content"
                             android:checkable="true"
                             android:checked="true"
-                            android:text="Best" />
+                            android:text="@string/best" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/btncheapest"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checkable="true"
-                            android:text="Cheapest" />
+                            android:text="@string/cheapest" />
                     </com.google.android.material.chip.ChipGroup>
 
                     <TextView
@@ -526,7 +526,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="32dp"
-                        android:text="Price range"
+                        android:text="@string/price_range"
                         app:layout_constraintStart_toStartOf="@+id/btn_date"
                         app:layout_constraintTop_toBottomOf="@+id/btn_date" />
 
@@ -596,11 +596,11 @@
             android:background="@color/background"/>
 
         <TextView
-            android:id="@+id/txt_no_flights"
+            android:id="@+id/txt_result"
             style="@style/text_primary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No flights found."
+            android:text="@string/no_flights_found"
             android:layout_marginTop="32dp"
             android:textAlignment="center"
             android:visibility="gone"

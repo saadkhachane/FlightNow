@@ -1,30 +1,17 @@
 package com.xardev.flightnow.adapters
 
-import android.animation.ObjectAnimator
-import android.animation.PropertyValuesHolder
-import android.app.Activity
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.DecelerateInterpolator
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.xardev.flightnow.R
-import com.xardev.flightnow.databinding.FlightItemBinding
 import com.xardev.flightnow.databinding.StationItemBinding
-import com.xardev.flightnow.models.Flight
 import com.xardev.flightnow.models.Station
-import com.xardev.flightnow.ui.SearchStationFragment
-import com.xardev.flightnow.viewmodels.MainViewModel
-import java.text.SimpleDateFormat
 
-private const val TAG = "here"
 
-class StationRecyclerAdapter(var context: Context, val fragment: SearchStationFragment)
+class StationRecyclerAdapter(var context: Context, private var listener: EventListener)
     : RecyclerView.Adapter<StationRecyclerAdapter.StationViewHolder>() {
 
     private var list : List<Station> = emptyList()
@@ -50,14 +37,7 @@ class StationRecyclerAdapter(var context: Context, val fragment: SearchStationFr
             }
 
             binder.cardStation.setOnClickListener {
-
-                if (fragment.selectionType == "Departure")
-                    fragment.viewModel.search_params.value?.set("origin", s.code!!)
-                else
-                    fragment.viewModel.search_params.value?.set("destination", s.code!!)
-
-                fragment.findNavController().navigateUp()
-
+                listener.onStationSelected(s.code!!)
             }
 
         }
@@ -68,30 +48,15 @@ class StationRecyclerAdapter(var context: Context, val fragment: SearchStationFr
         return list.size
     }
 
-    class StationViewHolder(var binder: StationItemBinding) : RecyclerView.ViewHolder(binder.root){
-
-    }
+    class StationViewHolder(var binder: StationItemBinding) : RecyclerView.ViewHolder(binder.root)
 
     fun updateList(list: List<Station>) {
         this.list = list
         notifyDataSetChanged()
     }
 
-    private fun animateItem(view: View, pos: Int){
-
-        val translateY = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, 50f, 0f)
-        val alpha = PropertyValuesHolder.ofFloat(View.ALPHA, 0f, 1f)
-
-        ObjectAnimator.ofPropertyValuesHolder(
-            view,
-            translateY,
-            alpha
-        ).also {
-            it.duration = 500
-            it.interpolator = DecelerateInterpolator()
-            it.startDelay = (pos * 300).toLong()
-            it.start()
-        }
-
+    interface EventListener{
+        fun onStationSelected(station: String)
     }
+
 }

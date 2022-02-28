@@ -3,4 +3,20 @@
 
     <string name="CONNEXION_PROBLEM">Couldn\'t fetch flights. Please check your internet connexion !</string>
     <string name="UNKNOWN_PROBLEM">Unknown problem. Please try again later !</string>
+    <string name="passegers">Passegers</string>
+    <string name="destination">Destination</string>
+    <string name="internet_error">Please check your internet connexion and try again.</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="departure">Departure</string>
+    <string name="no_flights_found">No flights found.</string>
+    <string name="loading">Loading flights ..</string>
+    <string name="pick_a_date">Pick a date</string>
+    <string name="ryanair">Ryanair</string>
+    <string name="teen">Teen</string>
+    <string name="adult">Adult</string>
+    <string name="child">Child</string>
+    <string name="best">Best</string>
+    <string name="price_range">Price range</string>
+    <string name="cheapest">Cheapest</string>
 </resources>

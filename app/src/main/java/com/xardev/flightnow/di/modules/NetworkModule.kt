@@ -1,6 +1,8 @@
 package com.xardev.flightnow.di.modules
 
 import com.xardev.flightnow.data.remote.ApiService
+import com.xardev.flightnow.repositories.MainRepository
+import com.xardev.flightnow.repositories.MainRepositoryImpl
 import com.xardev.flightnow.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -20,7 +22,7 @@ import retrofit2.create
 class NetworkModule {
 
     @Provides
-    fun provideApi() : ApiService {
+    fun provideApi(): ApiService {
         val logging = HttpLoggingInterceptor()
         logging.setLevel(Level.NONE)
 
@@ -29,12 +31,17 @@ class NetworkModule {
 
         return Retrofit.Builder()
             .baseUrl(Constants.API_URL_AVAILABILITY)
-            .client( httpClient.build() )
+            .client(httpClient.build())
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .build()
             .create()
 
+    }
+
+    @Provides
+    fun bindRepo(): MainRepository {
+        return MainRepositoryImpl(provideApi())
     }
 
 }

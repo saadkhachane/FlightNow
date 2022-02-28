@@ -1,30 +1,22 @@
 package com.xardev.flightnow.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.xardev.flightnow.models.Flight
 import com.xardev.flightnow.models.Station
-import com.xardev.flightnow.repositories.MainRepositoryImpl
-import com.xardev.flightnow.utils.Result
+import com.xardev.flightnow.repositories.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.observers.DisposableObserver
 import javax.inject.Inject
-import io.reactivex.rxjava3.core.Observer
-import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.schedulers.Schedulers
-import kotlinx.coroutines.delay
 import java.io.IOException
 
-private const val TAG = "here"
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    val repo : MainRepositoryImpl
+    private val repo : MainRepository
 ) : ViewModel() {
 
     private val disposables = CompositeDisposable()
@@ -32,8 +24,8 @@ class MainViewModel @Inject constructor(
     private val _isLoading = MutableLiveData(false)
     val isLoading : LiveData<Boolean> = _isLoading
 
-    private val _error = MutableLiveData<String?>()
-    val error : LiveData<String?> = _error
+    private val _error = MutableLiveData<Throwable?>()
+    val error : LiveData<Throwable?> = _error
 
     private val _stations = MutableLiveData<List<Station>>(null)
     val stations : LiveData<List<Station>> = _stations
@@ -41,7 +33,7 @@ class MainViewModel @Inject constructor(
     private val _flights = MutableLiveData<List<Flight>>(null)
     val flights : LiveData<List<Flight>> = _flights
 
-    val search_params = MutableLiveData<HashMap<String, String>>()
+    val searchParams = MutableLiveData<HashMap<String, String>>()
 
     init {
         val params = HashMap<String, String>()
@@ -54,7 +46,7 @@ class MainViewModel @Inject constructor(
         params["inf"] = "0"
         params["ToUs"] = "AGREED"
 
-        search_params.postValue(
+        searchParams.postValue(
             params
         )
 
@@ -74,7 +66,7 @@ class MainViewModel @Inject constructor(
                _stations.postValue(it)
            }.onErrorReturn {
                if (it is IOException)
-                   _error.postValue("Please check your internet connexion and try again.")
+                   _error.postValue(it)
                return@onErrorReturn emptyList<Station>()
            }.doFinally {
                _isLoading.postValue(false)
@@ -95,7 +87,7 @@ class MainViewModel @Inject constructor(
                 _flights.postValue(it)
             }.onErrorReturn {
                 if (it is IOException)
-                _error.postValue("Please check your internet connexion and try again.")
+                _error.postValue(it)
                 return@onErrorReturn emptyList<Flight>()
             }.doFinally {
                 _isLoading.postValue(false)

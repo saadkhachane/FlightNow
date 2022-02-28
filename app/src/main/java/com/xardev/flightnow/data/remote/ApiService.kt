@@ -1,16 +1,10 @@
 package com.xardev.flightnow.data.remote
 
-import com.xardev.flightnow.data.remote.dto.Flight.AvailabilityDTO
-import com.xardev.flightnow.data.remote.dto.Flight.FlightDTO
-import com.xardev.flightnow.data.remote.dto.Station.StationDTO
-import com.xardev.flightnow.data.remote.dto.Station.StationsDTO
-import com.xardev.flightnow.utils.Constants
-import io.reactivex.rxjava3.core.Observable
+import com.xardev.flightnow.data.remote.dto.flight.AvailabilityDTO
+import com.xardev.flightnow.data.remote.dto.station.StationsDTO
 import io.reactivex.rxjava3.core.Single
-import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Query
 import retrofit2.http.QueryMap
 import retrofit2.http.Url
 

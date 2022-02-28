@@ -2,8 +2,6 @@ package com.xardev.flightnow.models
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.xardev.flightnow.data.remote.dto.Flight.RegularFareDTO
-import com.xardev.flightnow.data.remote.dto.Flight.SegmentDTO
 
 data class Flight(
     var duration: String? = "",
@@ -34,8 +32,7 @@ data class Flight(
         parcel.readString(),
         parcel.readString(),
         parcel.readString()
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(duration)

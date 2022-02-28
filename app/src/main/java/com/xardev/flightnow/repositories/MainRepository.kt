@@ -4,7 +4,6 @@ import com.xardev.flightnow.models.Flight
 import com.xardev.flightnow.models.Station
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import com.xardev.flightnow.utils.Result as Result
 
 interface MainRepository {
 

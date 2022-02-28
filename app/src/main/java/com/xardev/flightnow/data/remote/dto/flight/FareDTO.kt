@@ -1,4 +1,4 @@
-package com.xardev.flightnow.data.remote.dto.Flight
+package com.xardev.flightnow.data.remote.dto.flight
 
 data class FareDTO(
     val amount: Double,

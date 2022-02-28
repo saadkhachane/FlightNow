@@ -6,8 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
-import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
@@ -16,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.xardev.flightnow.R
-import com.xardev.flightnow.adapters.FlightsRecyclerAdapter
 import com.xardev.flightnow.adapters.StationRecyclerAdapter
 import com.xardev.flightnow.databinding.FragmentSearchStationBinding
 import com.xardev.flightnow.models.Station
@@ -24,27 +21,27 @@ import com.xardev.flightnow.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 import java.lang.Exception
-import javax.inject.Inject
 
-private const val TAG = "here"
+private const val TAG = "SearchStationFragment"
 
 @AndroidEntryPoint
-class SearchStationFragment : Fragment() {
+class SearchStationFragment : Fragment(), StationRecyclerAdapter.EventListener {
 
     private lateinit var binding: FragmentSearchStationBinding
 
-    val viewModel: MainViewModel by activityViewModels()
+    private val viewModel: MainViewModel by activityViewModels()
 
     private lateinit var adapter: StationRecyclerAdapter
 
-    var selectionType : String? = ""
+    // Station type 0 = departure , 1 = destination
+    private var stationType: Int? = 0
 
-    val stations = ArrayList<Station>( emptyList() )
+    private val stations = ArrayList<Station>(emptyList())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        selectionType = arguments?.get("selectionType").toString()
+        stationType = arguments?.get("stationType").toString().toInt()
     }
 
     override fun onCreateView(
@@ -71,15 +68,15 @@ class SearchStationFragment : Fragment() {
     }
 
     private fun setClickListeners() {
-        binding.btnClose.setOnClickListener{
+        binding.btnClose.setOnClickListener {
             findNavController().navigateUp()
         }
     }
 
     private fun setInputChangeListener() {
-        binding.txtInput.doAfterTextChanged {s ->
+        binding.txtInput.doAfterTextChanged { s ->
             if (s != null) {
-                if (s.length > 0){
+                if (s.isNotEmpty()) {
                     adapter.updateList(
                         stations.filter {
                             it.countryName!!.contains(s, ignoreCase = true)
@@ -92,48 +89,71 @@ class SearchStationFragment : Fragment() {
     }
 
     private fun setTitles() {
-        binding.txtTitle.text = selectionType
-        if (selectionType == "Departure") binding.txtInputLayout.hint = "From"
-        else binding.txtInputLayout.hint = "To"
+        binding.txtTitle.text = if (stationType == 0) getString(R.string.departure)
+        else getString(R.string.destination)
+
+        if (stationType == 0) binding.txtInputLayout.hint = getString(R.string.from)
+        else binding.txtInputLayout.hint = getString(R.string.to)
     }
 
     private fun setObservers() {
-        viewModel.isLoading.observe(requireActivity()){
-            if (it != null){
-                binding.loading.visibility = if(it) View.VISIBLE else View.GONE
-                binding.recycler.visibility = if(it) View.INVISIBLE else View.VISIBLE
+        viewModel.isLoading.observe(requireActivity()) {
+            if (it != null) {
+
+                binding.loading.visibility = if (it) View.VISIBLE else View.GONE
+                binding.recycler.visibility = if (it) View.INVISIBLE else View.VISIBLE
+
                 try {
                     Glide.with(requireContext())
                         .load(R.drawable.loading)
                         .into(binding.loading)
-                }catch (e: Exception){
-
+                } catch (e: Exception) {
+                    Log.d(TAG, "Glide error: ${e.message}")
                 }
 
             }
         }
 
-        viewModel.stations.observe(requireActivity()){
-            if (it != null){
+        viewModel.stations.observe(requireActivity()) { list ->
+            if (list != null) {
                 stations.clear()
 
-                val l = it.groupBy { it.countryGroupCode }
+                // Group list by country name
+                val l = list.groupBy { it.countryGroupCode }
 
-                l.forEach{
+                // add each item to station's list
+                l.forEach {
                     stations.addAll(
                         it.value
                     )
                 }
+
+                // update list
                 adapter.updateList(stations)
             }
 
 
         }
 
-        viewModel.error.observe(requireActivity()){
-            if (it != null){
+        viewModel.error.observe(requireActivity()) {
+            if (it != null) {
+
                 kotlin.runCatching {
-                    Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
+
+                    if (it is IOException)
+
+                        Snackbar.make(
+                            binding.root,
+                            getString(R.string.CONNEXION_PROBLEM),
+                            Snackbar.LENGTH_LONG
+                        ).show()
+                    else
+
+                        Snackbar.make(
+                            binding.root,
+                            getString(R.string.UNKNOWN_PROBLEM),
+                            Snackbar.LENGTH_LONG
+                        ).show()
                 }
 
             }
@@ -143,7 +163,8 @@ class SearchStationFragment : Fragment() {
 
     private fun setupRecycler() {
         adapter = StationRecyclerAdapter(requireContext(), this)
-        binding.recycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.recycler.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.recycler.adapter = adapter
     }
 
@@ -154,6 +175,17 @@ class SearchStationFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         loadData()
+    }
+
+    override fun onStationSelected(station: String) {
+
+        if (stationType == 0)
+            viewModel.searchParams.value?.set("origin", station)
+        else
+            viewModel.searchParams.value?.set("destination", station)
+
+        binding.txtInput.clearFocus()
+        findNavController().navigateUp()
     }
 
 }

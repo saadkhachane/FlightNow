@@ -1,4 +1,4 @@
-package com.xardev.flightnow.data.remote.dto.Station
+package com.xardev.flightnow.data.remote.dto.station
 
 data class StationsDTO(
     val stations: List<StationDTO>
