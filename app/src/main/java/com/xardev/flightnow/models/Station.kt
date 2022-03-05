@@ -11,4 +11,8 @@ data class Station(
     val name: String?,
     val timeZoneCode: String?,
     val tripCardImageUrl: String?
-)
+) : Comparable<Station> {
+    override fun compareTo(other: Station): Int {
+        return this.compareTo(other)
+    }
+}

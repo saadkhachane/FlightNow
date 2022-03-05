@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.xardev.flightnow.R
 import com.xardev.flightnow.databinding.StationItemBinding
 import com.xardev.flightnow.models.Station
+import com.xardev.flightnow.utils.MyDiffUtil
 
 
 class StationRecyclerAdapter(var context: Context, private var listener: EventListener)
@@ -51,8 +53,13 @@ class StationRecyclerAdapter(var context: Context, private var listener: EventLi
     class StationViewHolder(var binder: StationItemBinding) : RecyclerView.ViewHolder(binder.root)
 
     fun updateList(list: List<Station>) {
+
+        val diffUtil = MyDiffUtil(this.list, list)
+        val diffResult = DiffUtil.calculateDiff(diffUtil)
         this.list = list
-        notifyDataSetChanged()
+
+        diffResult.dispatchUpdatesTo(this)
+
     }
 
     interface EventListener{

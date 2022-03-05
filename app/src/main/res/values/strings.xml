@@ -19,4 +19,7 @@
     <string name="best">Best</string>
     <string name="price_range">Price range</string>
     <string name="cheapest">Cheapest</string>
+    <string name="by">by</string>
+    <string name="flight_landing">flight landing</string>
+    <string name="flight_takeof">flight takeof</string>
 </resources>

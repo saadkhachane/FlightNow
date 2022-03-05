@@ -37,6 +37,12 @@ class SearchFlightsFragment : Fragment() {
 
     private var params = HashMap<String, String>()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        initFlightsSearchParams()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -108,10 +114,10 @@ class SearchFlightsFragment : Fragment() {
             showDateDialog()
         }
         binding.btnBest.setOnClickListener {
-            loadData()
+            sortByBest(viewModel.flights.value!!)
         }
         binding.btncheapest.setOnClickListener {
-            loadData()
+            sortByCheapest(viewModel.flights.value!!)
         }
         binding.btnExpand.setOnClickListener {
             if (binding.layoutPassengers.visibility == View.VISIBLE) hideView(binding.layoutPassengers)
@@ -126,12 +132,14 @@ class SearchFlightsFragment : Fragment() {
             override fun onStopTrackingTouch(slider: RangeSlider) {
                 binding.txtPriceMin.text = slider.values[0].toString()
                 binding.txtPriceMax.text = slider.values[1].toString()
-                loadData()
+
+                applyFlightsFilters(viewModel.flights.value!!)
             }
 
         })
 
     }
+
 
     private fun showDateDialog() {
         val c = Calendar.getInstance()
@@ -182,31 +190,10 @@ class SearchFlightsFragment : Fragment() {
                     // remove loading txt
                     binding.txtResult.visibility = View.GONE
 
-                    val minPrice = binding.rangeSlider.values[0]
-                    val maxPrice = binding.rangeSlider.values[1]
-
-                    // filter by [min,max] price
-                    var flights = filterByPriceRange(list, minPrice, maxPrice)
-
-                    // If user wants the best flights to be showed..
-                    if (binding.btnBest.isChecked)
-                        adapter.updateList(flights)
-
-                    // If user wants the cheapest flights to be showed..
-                    else if (binding.btncheapest.isChecked) {
-                        flights = flights.sortedBy { it.amount?.toFloat() }
-                        adapter.updateList(flights)
-                    }
-
-                    if (flights.isEmpty()){
-                        binding.txtResult.text = getString(R.string.no_flights_found)
-                        binding.txtResult.visibility = View.VISIBLE
-                    }
-
+                    applyFlightsFilters(list)
 
                 } else {
-                    binding.txtResult.text = getString(R.string.no_flights_found)
-                    binding.txtResult.visibility = View.VISIBLE
+                    showNoFlightsFound()
                 }
             }
 
@@ -238,13 +225,56 @@ class SearchFlightsFragment : Fragment() {
         }
 
         viewModel.searchParams.observe(requireActivity()) {
-            params = it
-            bindParamsAndLoadData()
+            it?.let {
+                params = it
+                bindParamsAndLoadData()
+            }
+
         }
+    }
+
+    private fun applyFlightsFilters(list: List<Flight>) {
+        val minPrice = binding.rangeSlider.values[0]
+        val maxPrice = binding.rangeSlider.values[1]
+
+        // filter by [min,max] price
+        val flights = filterByPriceRange(list, minPrice, maxPrice)
+
+        // If user wants the best flights to be showed..
+        if (binding.btnBest.isChecked)
+            sortByBest(flights)
+
+        // If user wants the cheapest flights to be showed..
+        else if (binding.btncheapest.isChecked) {
+            sortByCheapest(flights)
+        }
+
+        if (flights.isEmpty()) showNoFlightsFound()
+        else hideNoFlightsFound()
+    }
+
+    private fun showNoFlightsFound() {
+        binding.txtResult.text = getString(R.string.no_flights_found)
+        binding.txtResult.visibility = View.VISIBLE
+    }
+
+    private fun hideNoFlightsFound() {
+        binding.txtResult.visibility = View.INVISIBLE
     }
 
     private fun filterByPriceRange(list: List<Flight>, min: Float, max: Float) =
         list.filter { it.amount?.toFloat()!! in min..max }
+
+
+    private fun sortByBest(list: List<Flight>) {
+        adapter.updateList(list)
+    }
+
+    private fun sortByCheapest(list: List<Flight>) {
+        val flights = list.sortedBy { it.amount?.toFloat() }
+        adapter.updateList(flights)
+    }
+
 
     private fun setupRecycler() {
         adapter = FlightsRecyclerAdapter(requireContext())
@@ -326,6 +356,21 @@ class SearchFlightsFragment : Fragment() {
         view.visibility = View.VISIBLE
         binding.btnExpand.rotation = 0f
 
+    }
+
+    private fun initFlightsSearchParams() {
+        params = HashMap<String, String>()
+        params["dateout"] = ""
+        params["origin"] = ""
+        params["destination"] = ""
+        params["adt"] = "1"
+        params["chd"] = "0"
+        params["teen"] = "0"
+        params["inf"] = "0"
+        params["ToUs"] = "AGREED"
+
+        if (viewModel.searchParams.value == null)
+            viewModel.searchParams.postValue(params)
     }
 
 }

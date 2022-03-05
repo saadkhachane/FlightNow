@@ -1,21 +1,18 @@
 package com.xardev.flightnow.adapters
 
-import android.animation.ObjectAnimator
-import android.animation.PropertyValuesHolder
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.view.animation.DecelerateInterpolator
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.xardev.flightnow.R
 import com.xardev.flightnow.databinding.FlightItemBinding
 import com.xardev.flightnow.models.Flight
+import com.xardev.flightnow.utils.MyDiffUtil
 import java.lang.Exception
 import java.time.LocalDateTime
 
@@ -41,27 +38,33 @@ class FlightsRecyclerAdapter(var context: Context) :
             val flight = list[position]
 
             flight.duration = formatDuration(flight.duration!!)
-            flight.time = listOf(formatTime(flight.time!![0]), formatTime(flight.time!![1]))
-            if (flight.operatedBy.isNullOrBlank()) flight.operatedBy = context.getString(R.string.ryanair)
+
+            // Format time
+            val (time1, time2) = listOf(formatTime(flight.time!![0]), formatTime(flight.time!![1]))
+
+            flight.time = listOf(time1, time2)
+
+            val time = "$time1 - $time2"
+            binder.txtTime.text = time
+
+            // flight operator
+            if (flight.operatedBy.isNullOrBlank()) flight.operatedBy =
+                context.getString(R.string.ryanair)
             binder.flight = flight
 
-//            val time = "${formatTime(flight.time!![0])} - ${formatTime(flight.time!![1])}"
-//            binder.txtTime.text = time
-
+            // Airports
             val airports = "${flight.origin} - ${flight.destination}"
             binder.txtAirports.text = airports
 
             binder.cardFlight.setOnClickListener {
                 val bundle = Bundle()
                 bundle.putParcelable("flight", flight)
+
                 Navigation.findNavController(binder.view).navigate(
                     R.id.action_searchFlightsFragment_to_flightDetailsFragment,
                     bundle
                 )
             }
-
-            animateItem(binder.cardFlight, 1f)
-            animateItem(binder.cardFlightShadow, 0.2f)
 
         }
 
@@ -69,24 +72,26 @@ class FlightsRecyclerAdapter(var context: Context) :
 
 
     private fun formatTime(dateString: String): String {
-        try {
-            val dt : LocalDateTime
+        return try {
+            val dt: LocalDateTime
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 dt = LocalDateTime.parse(dateString)
-                return "${dt.hour}:${dt.minute}"
+                "${dt.hour}:${dt.minute}"
+            } else {
+                ""
             }
-            return ""
 
         } catch (e: Exception) {
-            return dateString
+            dateString
         }
 
     }
 
     private fun formatDuration(s: String): String {
-
-        return "${s.replace(":", "h ")}m"
+        var fd = s.replace(":", "h ")
+        fd = fd.replace("m", "")
+        return "${fd}m"
     }
 
     override fun getItemCount(): Int {
@@ -95,26 +100,14 @@ class FlightsRecyclerAdapter(var context: Context) :
 
     class FlightViewHolder(var binder: FlightItemBinding) : RecyclerView.ViewHolder(binder.root)
 
-    @SuppressLint("NotifyDataSetChanged")
+
     fun updateList(list: List<Flight>) {
+
+        val diffUtil = MyDiffUtil(this.list, list)
+        val diffResult = DiffUtil.calculateDiff(diffUtil)
         this.list = list
-        notifyDataSetChanged()
+
+        diffResult.dispatchUpdatesTo(this)
     }
 
-    private fun animateItem(view: View, alpha: Float) {
-
-        val translateY = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, 50f, 0f)
-        val alfa = PropertyValuesHolder.ofFloat(View.ALPHA, 0f, alpha)
-
-        ObjectAnimator.ofPropertyValuesHolder(
-            view,
-            translateY,
-            alfa
-        ).also {
-            it.duration = 300
-            it.interpolator = DecelerateInterpolator()
-            it.start()
-        }
-
-    }
 }

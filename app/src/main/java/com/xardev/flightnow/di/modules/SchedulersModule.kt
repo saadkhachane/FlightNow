@@ -3,7 +3,9 @@ package com.xardev.flightnow.di.modules
 import com.xardev.flightnow.data.remote.ApiService
 import com.xardev.flightnow.repositories.MainRepository
 import com.xardev.flightnow.repositories.MainRepositoryImpl
+import com.xardev.flightnow.utils.BaseSchedulers
 import com.xardev.flightnow.utils.Constants
+import com.xardev.flightnow.utils.StandardSchedulers
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,29 +21,11 @@ import retrofit2.create
 
 @Module
 @InstallIn(SingletonComponent::class)
-class NetworkModule {
+class SchedulersModule {
 
     @Provides
-    fun provideApi(): ApiService {
-        val logging = HttpLoggingInterceptor()
-        logging.setLevel(Level.NONE)
-
-        val httpClient = OkHttpClient.Builder()
-        httpClient.addInterceptor(logging)
-
-        return Retrofit.Builder()
-            .baseUrl(Constants.API_URL_AVAILABILITY)
-            .client(httpClient.build())
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-            .build()
-            .create()
-
-    }
-
-    @Provides
-    fun provideRepo(): MainRepository {
-        return MainRepositoryImpl(provideApi())
+    fun provideStandardSchedulers(): BaseSchedulers {
+        return StandardSchedulers()
     }
 
 }

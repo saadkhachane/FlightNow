@@ -42,6 +42,7 @@ class SearchStationFragment : Fragment(), StationRecyclerAdapter.EventListener {
         super.onCreate(savedInstanceState)
 
         stationType = arguments?.get("stationType").toString().toInt()
+
     }
 
     override fun onCreateView(
@@ -177,6 +178,7 @@ class SearchStationFragment : Fragment(), StationRecyclerAdapter.EventListener {
         loadData()
     }
 
+
     override fun onStationSelected(station: String) {
 
         if (stationType == 0)
@@ -187,5 +189,6 @@ class SearchStationFragment : Fragment(), StationRecyclerAdapter.EventListener {
         binding.txtInput.clearFocus()
         findNavController().navigateUp()
     }
+
 
 }

@@ -17,7 +17,7 @@ data class Flight(
     val originName: String? = "",
     val destinationName: String? = "",
     val destination: String? = ""
-) : Parcelable {
+) : Parcelable, Comparable<Flight> {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),
@@ -62,5 +62,9 @@ data class Flight(
         override fun newArray(size: Int): Array<Flight?> {
             return arrayOfNulls(size)
         }
+    }
+
+    override fun compareTo(other: Flight): Int {
+        return this.compareTo(other)
     }
 }
